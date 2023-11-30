@@ -1,0 +1,13 @@
+[Unit]
+Description=Observability AWS Cloudwatch Integration
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/otel-base --config /etc/observability-aws/config.yaml
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+

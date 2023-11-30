@@ -1,0 +1,67 @@
+receivers:
+  journald:
+    # disabled for now: directory: /run/log/journal
+    units:
+      - sshd # Example unit, more can be added
+    priority: info
+
+processors:
+  resourcedetection/ec2:
+    detectors: ["ec2"]  
+  batch:
+
+exporters:
+  awscloudwatchlogs:
+    log_group_name: "testing-logs-emf"
+    log_stream_name: "testing-integrations-stream-emf"
+    # NOTE: optionally
+    raw_log: true
+    region: "us-east-1"
+    endpoint: "logs.us-east-1.amazonaws.com"
+    log_retention: 365
+    tags: { 'sampleKey': 'sampleValue'}
+
+extensions:
+  health_check:
+
+service:
+  extensions: [health_check]
+  pipelines:
+    logs:
+      receivers: [journald]
+      processors: [batch]
+      exporters: [awscloudwatchlogs]
+receivers:
+  journald:
+    # disabled for now: directory: /run/log/journal
+    units:
+      - sshd # Example unit, more can be added
+    priority: info
+
+processors:
+  resourcedetection/ec2:
+    detectors: ["ec2"]  
+  batch:
+
+exporters:
+  awscloudwatchlogs:
+    log_group_name: "testing-logs-emf"
+    log_stream_name: "testing-integrations-stream-emf"
+    # NOTE: optionally
+    raw_log: true
+    region: "us-east-1"
+    endpoint: "logs.us-east-1.amazonaws.com"
+    log_retention: 365
+    tags: { 'sampleKey': 'sampleValue'}
+
+extensions:
+  health_check:
+
+service:
+  extensions: [health_check]
+  pipelines:
+    logs:
+      receivers: [journald]
+      processors: [batch]
+      exporters: [awscloudwatchlogs]
+
