@@ -1,26 +1,27 @@
-Name: observability-aws-cloudwatch
+Name: opentelemetry-collector-cloudwatch-config
 Version: 1.0
 Release: 1%{?dist}
 Summary: Observability cloudwatch integration
 BuildArch: noarch
 
-License:  GPL
+License: Apache-2.0
 Source1: config.yaml
-Source2: observability-aws-cloudwatch.service
+Source2: opentelemetry-collector-cloudwatch-config.service
 
 # Necessary to access the systemd macros
 BuildRequires: systemd
+Requires: opentelemetry-collector
 
 %description
 RHEL observability configuration for AWS cloudwatch integration.
 
 %install 
 # create expected directory layout
-mkdir -p %{buildroot}%{_sysconfdir}/observability-aws
+mkdir -p %{buildroot}%{_sysconfdir}/opentelemetry-collector-cloudwatch-config
 mkdir -p %{buildroot}%{_unitdir}
 
 # install files
-install -p -m 0644 -D %{SOURCE1} %{buildroot}%{_sysconfdir}/observability-aws/config.yaml
+install -p -m 0644 -D %{SOURCE1} %{buildroot}%{_sysconfdir}/opentelemetry-collector-cloudwatch-config/config.yaml
 install -p -m 0644 -D %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 
 %post
@@ -40,8 +41,8 @@ fi
 
 %files
 %{_unitdir}/%{name}.service
-%{_sysconfdir}/observability-aws/config.yaml
+%{_sysconfdir}/opentelemetry-collector-cloudwatch-config/config.yaml
 
 %changelog
-* Thu Jan 25 2024  Felix Kolwa <fkolwa@redhat.com> - 1.0-1
+* Wed Feb 7 2024 Nina Olear <nolear@redhat.com> - 1.0-1
 - Adding installation routine for config and service file
