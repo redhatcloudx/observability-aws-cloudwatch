@@ -1,6 +1,6 @@
 Name: opentelemetry-collector-cloudwatch-config
 Version: 1.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Observability cloudwatch integration
 BuildArch: noarch
 
@@ -15,7 +15,7 @@ Requires: opentelemetry-collector
 %description
 RHEL observability configuration for AWS cloudwatch integration.
 
-%install 
+%install
 # create expected directory layout
 mkdir -p %{buildroot}%{_sysconfdir}/opentelemetry-collector-cloudwatch-config
 mkdir -p %{buildroot}%{_unitdir}
@@ -44,5 +44,9 @@ fi
 %{_sysconfdir}/opentelemetry-collector-cloudwatch-config/config.yaml
 
 %changelog
+* Thu Apr 04 2024 Felix Kolwa <fkolwa@redhat.com> - 1.0-2
+- fix binary and config path in service file.
+- version bump
+
 * Wed Feb 7 2024 Nina Olear <nolear@redhat.com> - 1.0-1
 - Adding installation routine for config and service file
