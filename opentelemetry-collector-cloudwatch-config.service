@@ -5,6 +5,8 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/opentelemetry-collector --config /etc/opentelemetry-collector-cloudwatch-config/config.yaml
+User=aws-observability
+Group=aws-observability
 Restart=on-failure
 RestartSec=30
 
