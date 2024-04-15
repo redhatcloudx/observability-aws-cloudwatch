@@ -11,6 +11,8 @@ Source2: opentelemetry-collector-cloudwatch-config.service
 # Necessary to access the systemd macros
 BuildRequires: systemd
 Requires: opentelemetry-collector
+Requires(pre): shadow-utils
+Requires(postun): shadow-utils
 
 %description
 RHEL observability configuration for AWS cloudwatch integration.
@@ -24,8 +26,15 @@ mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 -D %{SOURCE1} %{buildroot}%{_sysconfdir}/opentelemetry-collector-cloudwatch-config/config.yaml
 install -p -m 0644 -D %{SOURCE2} %{buildroot}%{_unitdir}/%{name}.service
 
+%pre
+/usr/bin/getent group aws-observability > /dev/null || /usr/sbin/groupadd -r aws-observability
+/usr/bin/getent passwd aws-observability > /dev/null || /usr/sbin/useradd -r -M -s /sbin/nologin -g aws-observability -G systemd-journal aws-observability
+
 %post
 /bin/systemctl --system daemon-reload 2>&1
+
+%postun
+/usr/sbin/userdel aws-observability
 
 %preun
 if [ $1 -eq 0 ]; then
