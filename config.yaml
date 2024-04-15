@@ -2,7 +2,7 @@ receivers:
   journald:
     # disabled for now: directory: /run/log/journal
     units:
-      - sshd # Example unit, more can be added
+    # NOTE: if no specific unit is defined, all journald units are included.
     priority: info
 
 processors:
